@@ -60,5 +60,19 @@ jsmake.dotnet.DotNetUtils.prototype = {
 	},
 	runNUnit: function (dllPaths) {
 		jsmake.Sys.createRunner(this._nunitPath).args('/nologo', dllPaths).run();
+	},
+	// Example: buildSetup('src/SolutionFile.sln', 'SetupProjectName', 'Release', 'AnyCPU');
+	buildSetup: function (sln, vdproj, configuration, platform) {
+		var devEnvDir = sys.getEnvVar('DevEnvDir', null);
+		if(!devEnvDir) {
+			throw new Error('"DevEnvDir" environment variable must be defined, either define it or run build in Visual Studio command prompt.');
+		}
+		sys.createRunner(jsmake.Fs.combinePaths(devEnvDir, 'devenv.exe'))
+			.args(sln)
+			.args('/Build', [ configuration, platform ].join('|'))
+			.args('/Project', vdproj)
+			// .args('/Out', 'devenv_errors.txt')
+			.run();
 	}
+	
 };
