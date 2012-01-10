@@ -38,7 +38,7 @@ jsmake.dotnet.DotNetUtils.prototype = {
 			runner.args('/t:' + jsmake.Utils.toArray(targets).join(';'));
 		}
 		if (parameters) {
-			parameters = jsmake.Utils.map(parameters, function (val, key) { return key + '="' + val + '"'; });
+			parameters = jsmake.Utils.map(parameters, function (val, key) { return key + '=' + val; });
 			runner.args('/p:' + parameters.join(';'));
 		}
 		runner.run();
