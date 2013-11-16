@@ -45,7 +45,11 @@ jsmake.dotnet.DotNetUtils.prototype = {
 		jsmake.Fs.writeFile(path, rows.join('\n'));
 	},
 	runNUnit: function (dllPaths) {
-		jsmake.Sys.createRunner(this._nunitPath).args('/nologo', dllPaths).run();
+		jsmake.Sys.createRunner(this._nunitPath)
+			.args('/nologo')
+			.args('/framework=' + this._frameworkVersion)
+			.args(dllPaths)
+			.run();
 	},
 	// Example: buildSetup('src/SolutionFile.sln', 'SetupProjectName', 'Release', 'AnyCPU');
 	buildSetup: function (sln, vdproj, configuration, platform) {
